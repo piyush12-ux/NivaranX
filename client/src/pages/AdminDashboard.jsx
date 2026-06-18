@@ -18,7 +18,7 @@ const AdminDashboard = () => {
 
   const fetchComplaints = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/complaints', {
+      const res = await axios.get('https://nivaranx.onrender.com/api/admin/complaints', {
         headers: { authorization: `Bearer ${token}` }
       })
       setComplaints(res.data.complaints)
@@ -29,7 +29,7 @@ const AdminDashboard = () => {
 
   const fetchAnalytics = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/admin/analytics', {
+      const res = await axios.get('https://nivaranx.onrender.com/api/admin/analytics', {
         headers: { authorization: `Bearer ${token}` }
       })
       setAnalytics(res.data)
@@ -40,7 +40,7 @@ const AdminDashboard = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      await axios.put(`http://localhost:5000/api/admin/complaints/${id}/status`,
+      await axios.put(`https://nivaranx.onrender.com/api/admin/complaints/${id}/status`,
         { status },
         { headers: { authorization: `Bearer ${token}` } }
       )
@@ -185,7 +185,7 @@ const AdminDashboard = () => {
                   <p className="text-gray-400 mt-1">{c.description}</p>
                   {c.image && (
                     <img
-                      src={`http://localhost:5000/uploads/${c.image}`}
+                      src={`https://nivaranx.onrender.com/uploads/${c.image}`}
                       alt="complaint"
                       className="mt-3 rounded-xl w-full max-h-48 object-cover"
                     />

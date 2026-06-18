@@ -179,7 +179,7 @@ const Dashboard = () => {
                 <p className="text-gray-400 mt-2">{c.description}</p>
                 {c.image && (
                   <img
-                    src={`http://localhost:5000/uploads/${c.image}`}
+                    src={`https://nivaranx.onrender.com/uploads/${c.image}`}
                     alt="complaint"
                     className="mt-3 rounded-xl w-full max-h-48 object-cover"
                   />

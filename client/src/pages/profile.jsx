@@ -18,7 +18,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem('token')
       const res = await axios.put(
-        'http://localhost:5000/api/auth/profile',
+        'https://nivaranx.onrender.com/api/auth/profile',
         form,
         { headers: { authorization: `Bearer ${token}` } }
       )

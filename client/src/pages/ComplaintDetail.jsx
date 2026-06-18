@@ -55,7 +55,7 @@ const ComplaintDetail = ({ complaint, onBack }) => {
           <div className="mb-6">
             <p className="text-gray-400 text-sm mb-2">Evidence Photo</p>
             <img
-              src={`http://localhost:5000/uploads/${complaint.image}`}
+              src={`https://nivaranx.onrender.com/uploads/${complaint.image}`}
               alt="complaint evidence"
               className="rounded-xl w-full max-h-64 object-cover"
             />
