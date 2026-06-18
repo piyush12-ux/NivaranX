@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast'
 import { motion } from 'framer-motion'
 import Sidebar from '../components/Sidebar'
 import Chatbot from '../components/Chatbot'
-import Profile from './Profile'
+import Profile from './profile'
 import ComplaintDetail from './ComplaintDetail'
 import Notifications from '../components/Notifications'
 
