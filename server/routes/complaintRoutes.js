@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const { createComplaint, getMyComplaints } = require('../controllers/complaintController')
 const authMiddleware = require('../middleware/authMiddleware')
-const upload = require('../middleware/uploadMiddleware')
+const upload = require('../middleware/uploadmiddleware')
 const { complaintLimiter } = require('../middleware/rateLimitMiddleware')
 
 router.post('/create', authMiddleware, complaintLimiter, upload.single('image'), createComplaint)
