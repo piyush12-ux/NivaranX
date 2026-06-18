@@ -1,5 +1,5 @@
-const Complaint = require('../models/complaint')
-const User = require('../models/User')
+const Complaint = require('../models/Complaint')
+const User = require('../models/user')
 const Notification = require('../models/Notification')
 
 // Get all complaints
