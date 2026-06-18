@@ -1,4 +1,4 @@
-const Complaint = require('../models/Complaint')
+const Complaint = require('../models/complaint')
 const User = require('../models/User')
 const Notification = require('../models/Notification')
 
