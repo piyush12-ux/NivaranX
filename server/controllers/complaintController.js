@@ -58,7 +58,7 @@ const createComplaint = async (req, res) => {
       description,
       category,
       location,
-      image: req.file ? req.file.filename : null
+      image: req.file ? req.file.path : null
     })
 
     res.status(201).json({

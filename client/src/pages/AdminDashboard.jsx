@@ -84,7 +84,6 @@ const AdminDashboard = () => {
       return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h2 className="text-2xl font-bold text-white mb-6">Admin Dashboard 👨‍💼</h2>
-
           <div className="grid grid-cols-4 gap-4 mb-8">
             <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl text-center">
               <p className="text-4xl font-bold text-blue-400">{analytics.total || 0}</p>
@@ -103,7 +102,6 @@ const AdminDashboard = () => {
               <p className="text-gray-400 mt-1">Users</p>
             </div>
           </div>
-
           <h3 className="text-lg font-bold text-white mb-4">Recent Complaints</h3>
           {complaints.slice(0, 5).map((c, index) => (
             <motion.div
@@ -132,8 +130,6 @@ const AdminDashboard = () => {
       return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h2 className="text-2xl font-bold text-white mb-6">All Complaints</h2>
-
-          {/* Search & Filter */}
           <div className="flex gap-3 mb-6">
             <input
               type="text"
@@ -168,9 +164,7 @@ const AdminDashboard = () => {
               <option value="Public Safety">Public Safety</option>
             </select>
           </div>
-
           <p className="text-gray-500 text-sm mb-4">{filteredComplaints.length} complaints found</p>
-
           {filteredComplaints.map((c, index) => (
             <motion.div
               key={c._id}
@@ -185,7 +179,7 @@ const AdminDashboard = () => {
                   <p className="text-gray-400 mt-1">{c.description}</p>
                   {c.image && (
                     <img
-                      src={`https://nivaranx.onrender.com/uploads/${c.image}`}
+                      src={c.image}
                       alt="complaint"
                       className="mt-3 rounded-xl w-full max-h-48 object-cover"
                     />
@@ -248,8 +242,6 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen bg-gray-950 text-white flex">
       <Toaster />
-
-      {/* Sidebar */}
       <motion.div
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -261,7 +253,6 @@ const AdminDashboard = () => {
           </h1>
           <p className="text-gray-500 text-xs mt-1">Admin Panel</p>
         </div>
-
         <nav className="flex-1 p-4 space-y-2">
           {menuItems.map((item) => (
             <motion.button
@@ -280,7 +271,6 @@ const AdminDashboard = () => {
             </motion.button>
           ))}
         </nav>
-
         <div className="p-4 border-t border-gray-800">
           <p className="text-gray-500 text-xs mb-2">Logged in as</p>
           <p className="text-white font-bold text-sm">{user.name}</p>
@@ -295,8 +285,6 @@ const AdminDashboard = () => {
           </motion.button>
         </div>
       </motion.div>
-
-      {/* Main Content */}
       <main className="flex-1 p-8 overflow-y-auto">
         {renderContent()}
       </main>

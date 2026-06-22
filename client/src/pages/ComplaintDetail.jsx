@@ -22,7 +22,6 @@ const ComplaintDetail = ({ complaint, onBack }) => {
       animate={{ opacity: 1, y: 0 }}
       className="max-w-3xl"
     >
-      {/* Back Button */}
       <motion.button
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
@@ -35,8 +34,6 @@ const ComplaintDetail = ({ complaint, onBack }) => {
       <h2 className="text-2xl font-bold text-white mb-6">Complaint Detail 📋</h2>
 
       <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl mb-4">
-
-        {/* Title & Status */}
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-xl font-bold text-white flex-1">{complaint.title}</h3>
           <span className={`px-3 py-1 rounded-full text-xs font-bold ml-4 ${statusColor(complaint.status)}`}>
@@ -44,25 +41,22 @@ const ComplaintDetail = ({ complaint, onBack }) => {
           </span>
         </div>
 
-        {/* Description */}
         <div className="mb-6">
           <p className="text-gray-400 text-sm mb-1">Description</p>
           <p className="text-white">{complaint.description}</p>
         </div>
 
-        {/* Image */}
         {complaint.image && (
           <div className="mb-6">
             <p className="text-gray-400 text-sm mb-2">Evidence Photo</p>
             <img
-              src={`https://nivaranx.onrender.com/uploads/${complaint.image}`}
+              src={complaint.image}
               alt="complaint evidence"
               className="rounded-xl w-full max-h-64 object-cover"
             />
           </div>
         )}
 
-        {/* Details Grid */}
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-gray-800 p-4 rounded-xl">
             <p className="text-gray-400 text-sm">📍 Location</p>
@@ -86,7 +80,6 @@ const ComplaintDetail = ({ complaint, onBack }) => {
           </div>
         </div>
 
-        {/* Status Timeline */}
         <div className="mt-6">
           <p className="text-gray-400 text-sm mb-3">Status Timeline</p>
           <div className="flex items-center gap-2">

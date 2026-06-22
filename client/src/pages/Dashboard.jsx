@@ -179,7 +179,7 @@ const Dashboard = () => {
                 <p className="text-gray-400 mt-2">{c.description}</p>
                 {c.image && (
                   <img
-                    src={`https://nivaranx.onrender.com/uploads/${c.image}`}
+                    src={c.image}
                     alt="complaint"
                     className="mt-3 rounded-xl w-full max-h-48 object-cover"
                   />
@@ -304,7 +304,6 @@ const Dashboard = () => {
       <Toaster />
       <Sidebar activePage={activePage} setActivePage={setActivePage} />
       <div className="flex-1 flex flex-col">
-        {/* Top Navbar */}
         <div className="bg-gray-900 border-b border-gray-800 px-8 py-3 flex justify-between items-center">
           <p className="text-gray-400 text-sm">Hello, <span className="text-white font-bold">{user.name}</span>!</p>
           <Notifications />
