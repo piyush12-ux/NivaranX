@@ -2,7 +2,7 @@ import { useAuth } from '../context/AuthContext'
 import { useState, useEffect } from 'react'
 import * as api from '../services/api'
 import toast, { Toaster } from 'react-hot-toast'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Sidebar from '../components/Sidebar'
 import Chatbot from '../components/Chatbot'
 import Profile from './profile'
@@ -16,6 +16,7 @@ const Dashboard = () => {
   const [search, setSearch] = useState('')
   const [filterCategory, setFilterCategory] = useState('')
   const [selectedComplaint, setSelectedComplaint] = useState(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -50,7 +51,6 @@ const Dashboard = () => {
       formData.append('category', form.category)
       formData.append('location', form.location)
       formData.append('image', form.image)
-
       await api.createComplaint(formData)
       toast.success('Complaint submitted!')
       setForm({ title: '', description: '', category: '', location: '', image: null })
@@ -74,27 +74,32 @@ const Dashboard = () => {
     return matchSearch && matchCategory
   })
 
+  const handlePageChange = (page) => {
+    setActivePage(page)
+    setSidebarOpen(false)
+  }
+
   const renderContent = () => {
     if (activePage === 'dashboard') {
       return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h2 className="text-2xl font-bold text-white mb-6">Welcome back, {user.name}! 👋</h2>
-          <div className="grid grid-cols-3 gap-4 mb-8">
-            <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl text-center">
-              <p className="text-4xl font-bold text-blue-400">{complaints.length}</p>
-              <p className="text-gray-400 mt-1">Total</p>
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-6">Welcome back, {user.name}! 👋</h2>
+          <div className="grid grid-cols-3 gap-3 mb-8">
+            <div className="bg-gray-900 border border-gray-800 p-4 rounded-2xl text-center">
+              <p className="text-3xl font-bold text-blue-400">{complaints.length}</p>
+              <p className="text-gray-400 mt-1 text-sm">Total</p>
             </div>
-            <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl text-center">
-              <p className="text-4xl font-bold text-yellow-400">
+            <div className="bg-gray-900 border border-gray-800 p-4 rounded-2xl text-center">
+              <p className="text-3xl font-bold text-yellow-400">
                 {complaints.filter(c => c.status !== 'resolved').length}
               </p>
-              <p className="text-gray-400 mt-1">Pending</p>
+              <p className="text-gray-400 mt-1 text-sm">Pending</p>
             </div>
-            <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl text-center">
-              <p className="text-4xl font-bold text-green-400">
+            <div className="bg-gray-900 border border-gray-800 p-4 rounded-2xl text-center">
+              <p className="text-3xl font-bold text-green-400">
                 {complaints.filter(c => c.status === 'resolved').length}
               </p>
-              <p className="text-gray-400 mt-1">Resolved</p>
+              <p className="text-gray-400 mt-1 text-sm">Resolved</p>
             </div>
           </div>
           <h3 className="text-lg font-bold text-white mb-4">Recent Complaints</h3>
@@ -108,12 +113,12 @@ const Dashboard = () => {
               className="bg-gray-900 border border-gray-800 p-4 rounded-2xl mb-3 hover:border-blue-500/50 transition-all cursor-pointer"
             >
               <div className="flex justify-between items-center">
-                <h3 className="font-bold text-white">{c.title}</h3>
-                <span className={`px-3 py-1 rounded-full text-xs font-bold ${statusColor(c.status)}`}>
+                <h3 className="font-bold text-white text-sm">{c.title}</h3>
+                <span className={`px-2 py-1 rounded-full text-xs font-bold ${statusColor(c.status)}`}>
                   {c.status}
                 </span>
               </div>
-              <div className="flex gap-4 mt-2 text-sm text-gray-500">
+              <div className="flex gap-3 mt-2 text-xs text-gray-500">
                 <span>📍 {c.location}</span>
                 <span>🏷️ {c.category}</span>
               </div>
@@ -135,8 +140,8 @@ const Dashboard = () => {
     if (activePage === 'complaints') {
       return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h2 className="text-2xl font-bold text-white mb-6">My Complaints</h2>
-          <div className="flex gap-3 mb-6">
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-6">My Complaints</h2>
+          <div className="flex flex-col md:flex-row gap-3 mb-6">
             <input
               type="text"
               placeholder="Search complaints..."
@@ -168,15 +173,15 @@ const Dashboard = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
                 onClick={() => { setSelectedComplaint(c); setActivePage('detail') }}
-                className="bg-gray-900 border border-gray-800 p-5 rounded-2xl mb-4 hover:border-blue-500/50 transition-all cursor-pointer"
+                className="bg-gray-900 border border-gray-800 p-4 rounded-2xl mb-4 hover:border-blue-500/50 transition-all cursor-pointer"
               >
                 <div className="flex justify-between items-center">
-                  <h3 className="font-bold text-lg text-white">{c.title}</h3>
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${statusColor(c.status)}`}>
+                  <h3 className="font-bold text-white text-sm">{c.title}</h3>
+                  <span className={`px-2 py-1 rounded-full text-xs font-bold ${statusColor(c.status)}`}>
                     {c.status}
                   </span>
                 </div>
-                <p className="text-gray-400 mt-2">{c.description}</p>
+                <p className="text-gray-400 mt-2 text-sm">{c.description}</p>
                 {c.image && (
                   <img
                     src={c.image}
@@ -184,7 +189,7 @@ const Dashboard = () => {
                     className="mt-3 rounded-xl w-full max-h-48 object-cover"
                   />
                 )}
-                <div className="flex gap-4 mt-3 text-sm text-gray-500">
+                <div className="flex flex-wrap gap-3 mt-3 text-xs text-gray-500">
                   <span>📍 {c.location}</span>
                   <span>🏷️ {c.category}</span>
                   <span>⚡ {c.priority}</span>
@@ -199,8 +204,8 @@ const Dashboard = () => {
     if (activePage === 'new') {
       return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
-          <h2 className="text-2xl font-bold text-white mb-6">New Complaint</h2>
-          <div className="bg-gray-900 border border-gray-800 p-6 rounded-2xl">
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-6">New Complaint</h2>
+          <div className="bg-gray-900 border border-gray-800 p-4 md:p-6 rounded-2xl">
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
@@ -274,8 +279,8 @@ const Dashboard = () => {
 
       return (
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-          <h2 className="text-2xl font-bold text-white mb-6">Analytics</h2>
-          <div className="grid grid-cols-2 gap-4">
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-6">Analytics</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Object.entries(categories).map(([cat, count]) => (
               <div key={cat} className="bg-gray-900 border border-gray-800 p-4 rounded-2xl">
                 <p className="text-gray-400">{cat}</p>
@@ -302,13 +307,37 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-gray-950 text-white flex">
       <Toaster />
-      <Sidebar activePage={activePage} setActivePage={setActivePage} />
-      <div className="flex-1 flex flex-col">
-        <div className="bg-gray-900 border-b border-gray-800 px-8 py-3 flex justify-between items-center">
-          <p className="text-gray-400 text-sm">Hello, <span className="text-white font-bold">{user.name}</span>!</p>
+
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-20 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
+      <div className={`fixed md:relative z-30 md:z-auto transition-transform duration-300 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+      }`}>
+        <Sidebar activePage={activePage} setActivePage={handlePageChange} />
+      </div>
+
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Top Navbar */}
+        <div className="bg-gray-900 border-b border-gray-800 px-4 py-3 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="md:hidden text-gray-400 hover:text-white text-xl"
+            >
+              ☰
+            </button>
+            <p className="text-gray-400 text-sm">Hello, <span className="text-white font-bold">{user.name}</span>!</p>
+          </div>
           <Notifications />
         </div>
-        <main className="flex-1 p-8 overflow-y-auto">
+        <main className="flex-1 p-4 md:p-8 overflow-y-auto">
           {renderContent()}
         </main>
       </div>
