@@ -42,7 +42,7 @@ const createComplaint = async (req, res) => {
           content: `Title: ${title}\nDescription: ${description}`
         }
       ],
-      model: 'llama-3.1-8b-instant',
+      model: 'openai/gpt-oss-20b',
     })
 
     const aiResult = aiCheck.choices[0].message.content.trim()
